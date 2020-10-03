@@ -1,0 +1,71 @@
+instalar python3.7 libpython3.7-dev python3-all-dev 
+instalar virtualenv
+instalar postgresql
+instalar uwsgi
+instalar build-essential python3-dev
+
+instalar npm
+
+#instalar nvm
+
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile 
+source ~/.bashrc
+nvm install v12
+
+#crear espacio de trabajo
+mkdir -p mitienda (o el directorio q se decida)
+cd mitienda
+virtualenv -p python3.7 venv
+source venv/bin/activate
+git clone https://github.com/mirumee/saleor.git
+cd saleor
+git fetch origin 2.10:2.10 && git checkout 2.10
+pip install -r requirements.txt
+
+#configurar postgresql
+
+sudo su - postgres
+psql
+
+CREATE ROLE saleor WITH LOGIN PASSWORD 'saleor';
+CREATE DATABASE saleor;
+ALTER USER saleor WITH SUPERUSER;
+
+GRANT ALL PRIVILEGES ON DATABASE saleor TO saleor;
+ALTER USER saleor CREATEDB;
+
+# Exportar las variabls de entorno
+
+export ALLOWED_HOSTS=(server_ip)
+export ALLOWED_CLIENT_HOSTS=(server_ip)
+export DEBUG=True
+export SECRET_KEY='your_secret_key'
+export INTERNAL_IPS=127.0.0.1,(server_ip),
+export DEFAULT_COUNTRY=(codigo de pais)
+export DEFAULT_CURRENCY=(codigo de moneda)
+
+# configurar la api
+python manage.py migrate
+python manage.py populatedb
+python manage.py createsuperuser (esto va a pedir configurar el uausrio y la contrasenna)
+
+#ejecutar la api (falta ver como ejecutarla en 2do plano, creo q se hace con nohup pero no lo recuerdo bien, actualizo esto cuando sepa q funciona bien asi)
+python manage.py runserver 0.0.0.0:8000
+
+# instalando storefront & dashboard
+cd ../
+git clone https://github.com/mirumee/saleor-storefront.git
+cd saleor-storefront
+git checkout 2.10.1
+npm i
+vim package.json : --host 0.0.0.0 
+npm start
+
+cd ../
+git clone https://github.com/mirumee/saleor-dashboard.git
+cd saleor-dashboard
+git checkout 2.10.1
+npm i
+vim package.json : --host 0.0.0.0 
+npm start

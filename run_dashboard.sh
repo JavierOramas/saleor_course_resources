@@ -1,4 +1,4 @@
 export APP_MOUNT_URI=/dashboard/
-export API_URI=http://3.6.136.178:8000/graphql/
+export API_URI=http://(server_ip):8000/graphql/
 
-cd /home/ubuntu/codes/backend/saleor-dashboard && npm start
+cd (directorio de la tienda)/saleor-dashboard && npm start

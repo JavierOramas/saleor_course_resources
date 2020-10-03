@@ -1,11 +1,11 @@
-cd /home/ubuntu/codes/backend/saleor
-source /home/ubuntu/codes/backend/venv/bin/activate
-export ALLOWED_HOSTS=3.6.136.178
-export ALLOWED_CLIENT_HOSTS=3.6.136.178
+cd (directorio de la tienda)/saleor
+source (directorio de la tienda)/venv/bin/activate
+export ALLOWED_HOSTS=(server_ip)
+export ALLOWED_CLIENT_HOSTS=(server_ip)
 export DEBUG=True
 export SECRET_KEY=123456
-export INTERNAL_IPS=127.0.0.1,3.6.136.178,
-export API_URI=http://3.6.136.178:8000/graphql/
+export INTERNAL_IPS=127.0.0.1,(server_ip),
+export API_URI=http://(server_ip):8000/graphql/
 export APP_MOUNT_URI=/dashboard/
 export DEFAULT_COUNTRY=IN
 export DEFAULT_CURRENCY=INR
